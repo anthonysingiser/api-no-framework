@@ -1,0 +1,32 @@
+[
+    {
+        "id": "1",
+        "text": "this is a notes app",
+        "date": "09/07/2022"
+    },
+
+    {
+        "id": "2",
+        "text": "second note",
+        "date": "09/07/2022"
+    },
+
+    {
+        "id": "3",
+        "text": "third note",
+        "date": "09/07/2022"
+    },
+
+    {
+        "id": "4",
+        "text": "fourth note",
+        "date": "09/07/2022"
+    },
+
+    {
+        "id": "5",
+        "text": "fifth note",
+        "date": "09/07/2022"
+    }
+
+]   
