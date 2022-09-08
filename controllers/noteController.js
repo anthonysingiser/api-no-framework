@@ -26,7 +26,27 @@ async function getNote(req, res, id) {
     }
 }
 
+async function createNote(req, res) {
+    try {
+        const note = {
+
+            title: 'test note', 
+            description: 'this is a note',
+            date: 'date goes here'
+        }
+
+        const newNote = await Notes.create(note)
+
+        res.writeHead(201, {'Content-Type': 'application/json'})
+        return res.end(JSON.stringify(newNote))
+       
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     getNotes,
-    getNote
+    getNote,
+    createNote
 }

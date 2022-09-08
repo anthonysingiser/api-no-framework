@@ -1,4 +1,6 @@
 const notes = require('../data/notes.json')
+const { v4: uuidv4 } = require('uuid')
+const { writeDataToFile } = require('../utils')
 
 function find() {
     return new Promise((resolve, reject) => {
@@ -13,7 +15,17 @@ function findById(id) {
     })
 }
 
+function create(note) {
+    return new Promise((resolve, reject) => {
+        const newNote = {id: uuidv4(), ...note}
+        notes.push(newNote)
+        writeDataToFile('./data/notes.json', notes)
+        resolve(newNote) 
+    })
+}
+
 module.exports = {
     find,
-    findById
+    findById,
+    create
 }
