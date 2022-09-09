@@ -20,7 +20,6 @@ async function getNote(req, res, id) {
             res.writeHead(200, {'Content-Type': 'application/json'})
             res.end(JSON.stringify(note))
         }
-
     } catch (error) {
         console.log(error)
     }
@@ -28,18 +27,22 @@ async function getNote(req, res, id) {
 
 async function createNote(req, res) {
     try {
-        const note = {
+        let body = ''
+        req.on('data', (chunk) => {
+            body += chunk.toString()
+        })
+        req.on('end', async () => {
+            const {title, description, date} = JSON.parse(body)
+            const note = {
+                title, 
+                description,
+                date
+            }
+            const newNote = await Notes.create(note)
 
-            title: 'test note', 
-            description: 'this is a note',
-            date: 'date goes here'
-        }
-
-        const newNote = await Notes.create(note)
-
-        res.writeHead(201, {'Content-Type': 'application/json'})
-        return res.end(JSON.stringify(newNote))
-       
+            res.writeHead(201, {'Content-Type': 'application/json'})
+            return res.end(JSON.stringify(newNote))
+        }) 
     } catch (error) {
         console.log(error)
     }
