@@ -1,4 +1,4 @@
-const notes = require('../data/notes.json')
+let notes = require('../data/notes.json')
 const { v4: uuidv4 } = require('uuid')
 const { writeDataToFile } = require('../utils')
 
@@ -24,8 +24,28 @@ function create(note) {
     })
 }
 
+function update(id, note) {
+    return new Promise((resolve, reject) => {
+        const index = notes.findIndex((p) => p.id === id)
+        notes[index] = {id, ...note}
+        writeDataToFile('./data/notes.json', notes)
+        resolve(notes[index]) 
+    })
+}
+
+function remove(id) {
+    return new Promise((resolve, reject) => {
+        notes = notes.filter((p) => p.id !== id)
+        writeDataToFile('./data/notes.json', notes)
+        resolve() 
+    })
+}
+
+
 module.exports = {
     find,
     findById,
-    create
+    create,
+    update,
+    remove
 }

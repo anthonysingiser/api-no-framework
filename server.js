@@ -1,5 +1,5 @@
 const http = require('http')
-const { getNotes, getNote, createNote } = require('./controllers/noteController')
+const { getNotes, getNote, createNote, updateNote, removeNote } = require('./controllers/noteController')
 
 
 const server = http.createServer((req, res) => {
@@ -11,8 +11,16 @@ const server = http.createServer((req, res) => {
         getNote(req, res, id)
 
     } 
-    else if (req.url === '/api/notes' && req.method === 'POST'){
+    else if(req.url === '/api/notes' && req.method === 'POST'){
         createNote(req, res)
+    }
+    else if(req.url.match(/\/api\/notes\/([0-9]+)/) && req.method == 'PUT') {
+        const id = req.url.split('/')[3]
+        updateNote(req, res, id)
+    }
+    else if(req.url.match(/\/api\/notes\/([0-9]+)/) && req.method == 'DELETE') {
+        const id = req.url.split('/')[3]
+        removeNote(req, res, id)
     }
     else {
         res.writeHead(404, {'Content-Type': 'application/json'})
